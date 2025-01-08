@@ -1,26 +1,24 @@
 {% set name = "pyexcel-webio" %}
 {% set version = "0.1.4" %}
-{% set sha256 = "039538f1b35351f1632891dde29ef4d7fba744e217678ebb5a501336e28ca265" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 039538f1b35351f1632891dde29ef4d7fba744e217678ebb5a501336e28ca265
 
 build:
   noarch: python
   number: 1
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - python {{ python_min }}
     - setuptools
-
+    - pip
   run:
     - python >={{ python_min }}
     - pyexcel >=0.5.5
@@ -36,10 +34,7 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
-  summary: 'A generic request and response interface for pyexcel web extensions.'
-  description: |
-    'A generic request and response interface for pyexcel web extensions.' +
-    ''
+  summary: A generic request and response interface for pyexcel web extensions
   dev_url: https://github.com/pyexcel-webwares/pyexcel-webio
 
 extra:
